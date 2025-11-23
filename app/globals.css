@@ -48,12 +48,15 @@
       border: 1px solid rgba(255, 255, 255, 0.1);
     }
   }
-*, *::before, *::after {
-  box-sizing: border-box;
-}
-.onchainkit * {
-  all: revert-layer;
-}
+
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  /* Reset style OnchainKit agar tidak merusak layout */
+  .onchainkit * {
+    all: revert-layer;
+  }
 
   a {
     color: inherit;
@@ -72,7 +75,7 @@
 —————————————————————————————— */
 @layer utilities {
   .shadow-soft {
-    box-shadow: 0px 4px 20px rgba(0,0,0,0.06);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
   }
 
   .backdrop-glass {
@@ -84,11 +87,16 @@
     background: linear-gradient(180deg, #0052ff 0%, #ffffff 100%);
   }
 }
+
+/* ——————————————————————————————
+   Modal Fix (Base MiniApp)
+—————————————————————————————— */
 .okui-modal-container {
   justify-content: center !important;
   align-items: center !important;
   display: flex !important;
 }
+
 .okui-modal-content {
   border-radius: 16px !important;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important;
@@ -96,35 +104,47 @@
   max-width: 500px;
   width: 90%;
 }
+
 /* ——————————————————————————————
    FIX: MiniApp PFP terlalu besar
 —————————————————————————————— */
 
-/* Wrapper SafeArea dari MiniKit */
+/* SafeArea header dari MiniKit */
 .ok-minikit-safe-area {
   padding-top: 8px !important;
   padding-bottom: 8px !important;
   display: flex !important;
   flex-direction: column !important;
   align-items: center !important;
+  gap: 4px !important;
 }
 
-/* Avatar Image di MiniApp */
-.ok-minikit-safe-area img {
-  max-width: 90px !important;      /* Ukuran PFP — bisa kamu kecilkan lagi */
-  height: auto !important;
-  border-radius: 16px !important;  /* Rounded biar rapi */
-  border: 3px solid white !important; /* Border putih */
-  box-shadow: 0 4px 10px rgba(0,0,0,0.12); /* Shadow lembut */
+/* Avatar (PF P) */
+.ok-minikit-safe-area img,
+img.okui-avatar-image {
+  width: 85px !important;      /* <<< Ubah ukuran di sini */
+  height: 85px !important;
+  max-width: 85px !important;
+  max-height: 85px !important;
+
+  border-radius: 16px !important;
+  border: 3px solid #ffffff !important;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.12) !important;
+
+  object-fit: cover !important;
 }
 
-/* Username agar tidak terlalu dekat avatar */
-.ok-minikit-safe-area .okui-text {
-  margin-top: 4px !important;
+/* Username */
+.ok-minikit-safe-area .okui-text,
+.ok-minikit-safe-area span,
+.ok-minikit-safe-area p {
   font-size: 0.9rem !important;
+  margin-top: 2px !important;
+  text-align: center !important;
 }
 
-/* Atur tinggi header miniapp agar tidak makan layar */
+/* Container avatar */
 .ok-minikit-safe-area > div:first-child {
-  margin-bottom: 6px !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
