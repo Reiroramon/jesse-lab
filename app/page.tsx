@@ -3,11 +3,19 @@
 import { useState } from "react";
 import { Wallet } from "@coinbase/onchainkit/wallet";
 
+// Type untuk fitur premium
+type PremiumFeature = {
+  name: string;
+  icon: string;
+  price: string;
+  desc: string;
+};
+
 export default function JesseLabHome() {
   const [showModal, setShowModal] = useState(false);
-  const [activeFeature, setActiveFeature] = useState<any>(null);
+  const [activeFeature, setActiveFeature] = useState<PremiumFeature | null>(null);
 
-  const premiumFeatures = [
+  const premiumFeatures: PremiumFeature[] = [
     { name: "Mint NFT", icon: "💎", price: "5 $JESSE", desc: "Mint your creation directly on Base." },
     { name: "FX Filters", icon: "✨", price: "3 $JESSE", desc: "Unlock premium Jesse-style filters." },
     { name: "Avatar Upgrade", icon: "👑", price: "7 $JESSE", desc: "Upgrade your Jesse avatar with rare traits." },
@@ -15,7 +23,7 @@ export default function JesseLabHome() {
     { name: "Export HD", icon: "⬇️", price: "4 $JESSE", desc: "Get high-resolution export for your content." },
   ];
 
-  const openModal = (item: any) => {
+  const openModal = (item: PremiumFeature) => {
     setActiveFeature(item);
     setShowModal(true);
   };
@@ -54,21 +62,16 @@ export default function JesseLabHome() {
           {[1, 2, 3, 4, 5, 6].map((i) => (
             <div key={i} className="w-full h-[420px] bg-white rounded-2xl shadow-lg p-4 flex flex-col">
 
-              {/* PROFILE PICTURE */}
               <div className="h-40 w-full bg-gray-200 rounded-xl mb-3"></div>
 
-              {/* NAME */}
               <h3 className="font-bold text-xl">Creator {i}</h3>
 
-              {/* BIO */}
               <p className="italic text-gray-600 text-sm line-clamp-2">
                 Just making Jesse-style creations on Base ✨
               </p>
 
-              {/* CONTENT PREVIEW */}
               <div className="mt-auto h-28 w-full bg-gray-100 rounded-xl"></div>
 
-              {/* PREMIUM BADGE */}
               {i % 2 === 0 && (
                 <div className="mt-2 text-xs font-semibold text-yellow-600 bg-yellow-200 px-3 py-1 rounded-full text-center shadow-lg shadow-yellow-200/50">
                   ⭐ Premium Unlocked
@@ -80,7 +83,7 @@ export default function JesseLabHome() {
         </div>
       </section>
 
-      {/* PREMIUM FEATURES CAROUSEL */}
+      {/* PREMIUM FEATURES */}
       <section className="px-6 mb-20">
         <h2 className="text-2xl font-bold mb-4">Premium Features</h2>
 
@@ -106,7 +109,7 @@ export default function JesseLabHome() {
       </footer>
 
       {/* MODAL */}
-      {showModal && (
+      {showModal && activeFeature && (
         <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50">
           <div className="bg-white rounded-2xl p-6 w-80 shadow-xl">
             <h3 className="font-bold text-xl">{activeFeature.name}</h3>
