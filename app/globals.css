@@ -106,58 +106,79 @@
 }
 
 /* ——————————————————————————————
-   FIX: MiniApp PFP — ukuran kecil + tidak freeze
+   FINAL FIX — MiniKit PFP small + no freeze
 —————————————————————————————— */
 
-/* SafeArea container */
+/* SAFEAREA root */
 .ok-minikit-safe-area {
-  padding-top: 4px !important;
-  padding-bottom: 4px !important;
+  pointer-events: none !important;
+  touch-action: pan-y !important;
+  -webkit-overflow-scrolling: touch !important;
+
   display: flex !important;
   flex-direction: column !important;
   align-items: center !important;
+
+  padding: 0 !important;
+  margin: 0 !important;
   gap: 2px !important;
-  pointer-events: none !important; /* penting */
+}
+
+/* APPLY TO ALL ELEMENTS INSIDE SAFEAREA (shadow compatible) */
+.ok-minikit-safe-area * {
+  max-height: 48px !important;
+  max-width: 48px !important;
+
+  box-sizing: border-box !important;
+  pointer-events: auto !important;
 }
 
 /* Avatar wrapper */
 .ok-minikit-safe-area .okui-avatar,
-.ok-minikit-safe-area .okui-avatar > div {
-  width: 55px !important; 
-  height: 55px !important;
-  max-width: 55px !important;
-  max-height: 55px !important;
-  border-radius: 14px !important;
+.ok-minikit-safe-area .okui-avatar > *,
+.ok-minikit-safe-area [class*="avatar"] {
+  width: 48px !important;
+  height: 48px !important;
+  max-width: 48px !important;
+  max-height: 48px !important;
+
+  border-radius: 12px !important;
   overflow: hidden !important;
 
-  pointer-events: auto !important; /* aktifkan interaksi */
+  pointer-events: auto !important;
 }
 
-/* Avatar image */
+/* Avatar IMAGE — hard force */
 .ok-minikit-safe-area img,
+.ok-minikit-safe-area img.okui-avatar-image,
 img.okui-avatar-image {
-  width: 55px !important;
-  height: 55px !important;
-  max-width: 55px !important;
-  max-height: 55px !important;
-
-  border-radius: 14px !important;
-  border: 2px solid #fff !important;
+  width: 48px !important;
+  height: 48px !important;
+  max-width: 48px !important;
+  max-height: 48px !important;
 
   object-fit: cover !important;
+
+  border-radius: 12px !important;
+  border: 2px solid #fff !important;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.12) !important;
+
+  pointer-events: auto !important;
   display: block !important;
-
-  pointer-events: auto !important;
 }
 
-/* Username */
-.ok-minikit-safe-area .okui-text {
-  pointer-events: auto !important;
-  font-size: 0.8rem !important;
+/* USERNAME */
+.ok-minikit-safe-area .okui-text,
+.ok-minikit-safe-area span,
+.ok-minikit-safe-area p {
   margin-top: 3px !important;
+  font-size: 0.70rem !important;
+  line-height: 1 !important;
+  pointer-events: auto !important;
+  text-align: center !important;
 }
 
-/* Hapus blocking tap pada container pertama */
+/* Disable tap blocking */
 .ok-minikit-safe-area > div:first-child {
   pointer-events: none !important;
 }
