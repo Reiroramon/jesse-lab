@@ -1,3 +1,11 @@
+/* TAILWIND MUST COME FIRST */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ——————————————————————————————
+   Base Theme Overrides
+—————————————————————————————— */
 @layer base {
   :root {
     --background: #ffffff;
@@ -40,12 +48,12 @@
       border: 1px solid rgba(255, 255, 255, 0.1);
     }
   }
-
-  * {
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
-  }
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+.onchainkit * {
+  all: revert-layer;
+}
 
   a {
     color: inherit;
@@ -56,5 +64,23 @@
     html {
       color-scheme: dark;
     }
+  }
+}
+
+/* ——————————————————————————————
+   Jesse Lab UI Utilities
+—————————————————————————————— */
+@layer utilities {
+  .shadow-soft {
+    box-shadow: 0px 4px 20px rgba(0,0,0,0.06);
+  }
+
+  .backdrop-glass {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  .gradient-base {
+    background: linear-gradient(180deg, #0052ff 0%, #ffffff 100%);
   }
 }
