@@ -151,39 +151,39 @@ div.ock\:border-ock-background.ock\:h-full.ock\:w-full.ock\:border:focus {
 }
 
 /* =========================================
-   BASE MINIAPP HEADER — AVATAR FIX (FINAL)
+   BASE MINIAPP HEADER — AVATAR LEFT & FIX SCROLL
    ========================================= */
 
-/* Header container (Base MiniApp) */
 .okui-view-header {
   position: relative !important;
   display: flex !important;
   align-items: center !important;
-  justify-content: space-between !important;
-  padding-right: 56px !important; /* beri ruang supaya avatar tidak menumpuk */
-  pointer-events: none !important; /* hilangkan layer freeze */
+  justify-content: flex-start !important;
+  gap: 12px !important;
+  padding-left: 56px !important; /* ruang untuk avatar di kiri */
+  padding-right: 12px !important;
+  pointer-events: none !important; /* jangan block seluruh header */
 }
 
-/* Username (teks di header) */
-.okui-view-header .okui-text {
+/* Aktifkan interaksi hanya untuk teks & avatar */
+.okui-view-header .okui-text,
+.okui-view-header [data-testid="ockAvatar_ImageContainer"],
+.okui-view-header .okui-avatar {
   pointer-events: auto !important;
-  white-space: nowrap !important;
-  font-size: 0.9rem !important;
-  font-weight: 600 !important;
-  color: inherit !important;
 }
 
-/* Avatar container - target testid dan fallback selector yang toleran */
+/* Avatar container — pindah ke kiri, sejajar vertikal dengan username */
 div[data-testid="ockAvatar_ImageContainer"],
 [class*="ock:border-ock-background"],
 .okui-avatar {
   position: absolute !important;
-  right: 12px !important;
+  left: 12px !important; /* pos kiri sebelum username */
   top: 50% !important;
   transform: translateY(-50%) !important;
 
   width: 36px !important;
   height: 36px !important;
+  padding: 0 !important;
 
   display: flex !important;
   align-items: center !important;
@@ -191,16 +191,17 @@ div[data-testid="ockAvatar_ImageContainer"],
 
   border-radius: 9999px !important;
   background: transparent !important;
-  z-index: 99999 !important;
+  border: 2px solid rgba(0,82,255,0.12) !important;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06) !important;
 
-  pointer-events: auto !important; /* bisa diklik tanpa freeze */
-  -webkit-tap-highlight-color: transparent !important; /* hilangkan flash putih di mobile */
+  z-index: 99999 !important;
+  -webkit-tap-highlight-color: transparent !important;
   touch-action: manipulation !important;
   user-select: none !important;
   transition: transform 120ms ease, box-shadow 120ms ease !important;
 }
 
-/* Avatar image / svg ukuran pasti */
+/* Paksakan ukuran image/svg di dalam avatar */
 div[data-testid="ockAvatar_ImageContainer"] img,
 [class*="ock:border-ock-background"] img,
 .okui-avatar img,
@@ -217,7 +218,7 @@ div[data-testid="ockAvatar_ImageContainer"] svg,
   -webkit-tap-highlight-color: transparent !important;
 }
 
-/* Feedback saat tekan / fokus tanpa menjadi putih atau memblokir scroll */
+/* Tekan / fokus — umpan balik kecil tanpa menutupi atau menjadi putih */
 div[data-testid="ockAvatar_ImageContainer"]:active,
 [class*="ock:border-ock-background"]:active,
 .okui-avatar:active,
@@ -230,15 +231,18 @@ div[data-testid="ockAvatar_ImageContainer"]:focus,
   background: transparent !important;
 }
 
-/* Pastikan overlay/tap layer tidak memblokir scroll saat tidak aktif */
-.okui-modal-overlay,
+/* Pastikan tap/overlay layer tidak memblokir scroll */
 .okui-tap-layer,
+.okui-modal-overlay,
 .okui-view-transition {
   pointer-events: none !important;
   touch-action: auto !important;
 }
 
-/* Re-enable interaksi untuk isi header (username & avatar) */
-.okui-view-header * {
-  pointer-events: auto !important;
+/* Username styling tetap rapi setelah pindah avatar */
+.okui-view-header .okui-text {
+  white-space: nowrap !important;
+  font-size: 0.9rem !important;
+  font-weight: 600 !important;
+  color: inherit !important;
 }
