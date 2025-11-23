@@ -106,25 +106,31 @@
 }
 
 /* ——————————————————————————————
-   MINIAPP FIX – PFP 30px + Border Base + No Freeze + Right Top Position
+   MINIAPP — FINAL FIX (PFP 30px + NO FREEZE + RIGHT TOP)
 —————————————————————————————— */
 
-/* SafeArea container */
+/* Posisi SafeArea MiniKit */
 .ok-minikit-safe-area {
   position: absolute !important;
-  top: 6px !important;
-  right: 10px !important;
-  padding: 0 !important;
+  top: 8px !important;
+  right: 12px !important;
 
   display: flex !important;
   flex-direction: column !important;
   align-items: center !important;
+  gap: 2px !important;
 
-  pointer-events: none !important; /* penting agar screen tidak freeze */
-  z-index: 9999 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+
+  background: transparent !important;
+
+  z-index: 99999 !important;
+
+  pointer-events: none !important; /* jangan blokir scroll */
 }
 
-/* Avatar wrapper */
+/* AVATAR WRAPPER */
 .ok-minikit-safe-area .okui-avatar,
 .ok-minikit-safe-area .okui-avatar > div {
   width: 30px !important;
@@ -134,89 +140,57 @@
 
   border-radius: 8px !important;
   overflow: hidden !important;
+
   background: white !important;
 
-  pointer-events: auto !important; /* enable interaction */
+  pointer-events: auto !important;
 }
 
-/* Avatar image */
+/* AVATAR IMAGE */
 .ok-minikit-safe-area img,
 img.okui-avatar-image {
   width: 30px !important;
   height: 30px !important;
-  max-width: 30px !important;
-  max-height: 30px !important;
 
   border-radius: 8px !important;
-
-  /* Border Base Blue */
-  border: 2px solid #0052FF !important;
-
   object-fit: cover !important;
 
+  border: 2px solid #0052FF !important;
+
   display: block !important;
-  pointer-events: auto !important; /* no freeze */
+  pointer-events: auto !important;
 }
 
-/* Username text (diperkecil + auto) */
+/* USERNAME */
 .ok-minikit-safe-area .okui-text {
-  margin-top: 2px !important;
-  font-size: 0.6rem !important;
+  font-size: 0.60rem !important;
   line-height: 1 !important;
-
+  margin-top: 2px !important;
+  text-align: center !important;
   color: black !important;
-
   pointer-events: auto !important;
 }
 
-/* Disable tap-block di container utama */
-.ok-minikit-safe-area > div:first-child {
-  pointer-events: none !important;
-}
-/* ——————————————————————————————
-   ANTI FREEZE — FORCE FIX (FINAL)
-—————————————————————————————— */
-
-/* Hilangkan pointer blocking dari semua wrapper internal */
-.ok-minikit-safe-area,
-.ok-minikit-safe-area * {
-  pointer-events: none !important;
-}
-
-/* Aktifkan kembali pointer hanya untuk elemen avatar */
-.ok-minikit-safe-area img,
-.ok-minikit-safe-area .okui-avatar,
-.ok-minikit-safe-area .okui-avatar *,
-img.okui-avatar-image {
-  pointer-events: auto !important;
-}
-
-/* Pastikan tap tidak ditahan oleh transition container */
-.okui-view-transition,
-.okui-view-transition * {
-  pointer-events: none !important;
-}
-
-/* Izinkan avatar dan tombol lain tetap aktif */
-.okui-avatar,
-.okui-button,
-.okui-text {
-  pointer-events: auto !important;
-}
-
-/* Disable ~ background tap-capture overlay */
+/* ——— ANTI FREEZE ——— */
 .okui-tap-layer,
-.okui-tap-layer * {
-  pointer-events: none !important;
-}
-
-/* FIX: miniapp header overlay yang biasanya freeze */
+.okui-view-transition,
 .okui-view-header,
-.okui-view-header * {
+.okui-modal-overlay {
   pointer-events: none !important;
 }
 
-/* kecuali avatar */
+.okui-avatar,
+.okui-avatar * ,
+.okui-text,
+.okui-button,
+.ok-minikit-safe-area * {
+  pointer-events: auto !important;
+}
+
+.okui-view-header > * {
+  pointer-events: none !important;
+}
+
 .okui-view-header .okui-avatar,
 .okui-view-header .okui-avatar * {
   pointer-events: auto !important;
