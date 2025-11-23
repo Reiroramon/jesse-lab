@@ -246,3 +246,59 @@ div[data-testid="ockAvatar_ImageContainer"]:focus,
   font-weight: 600 !important;
   color: inherit !important;
 }
+
+/* =========================================
+   AVATAR: PLACE EXACTLY IN RED CIRCLE + DISABLE TAP (NO STUCK SCROLL)
+   ========================================= */
+
+/* header tetap memberi ruang untuk avatar di kiri */
+.okui-view-header {
+  position: relative !important;
+  padding-left: 64px !important; /* pastikan ada ruang untuk avatar */
+}
+
+/* target container avatar yang ada; non-interactive supaya tidak bisa ditekan */
+div[data-testid="ockAvatar_ImageContainer"],
+[class*="ock:border-ock-background"],
+.okui-avatar {
+  position: absolute !important;
+  left: 12px !important;            /* sesuaikan angka ini jika perlu geser horizontal */
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+
+  width: 40px !important;           /* ukuran kotak avatar sesuai lingkaran merah */
+  height: 40px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  border-radius: 9999px !important;
+  background: transparent !important;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06) !important;
+  z-index: 99999 !important;
+
+  pointer-events: none !important;  /* DISABLE TAP: mencegah stuck scroll */
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+/* pastikan gambar/svg mengisi lingkaran dan agak lebih kecil dari container */
+div[data-testid="ockAvatar_ImageContainer"] img,
+[class*="ock:border-ock-background"] img,
+.okui-avatar img,
+div[data-testid="ockAvatar_ImageContainer"] svg,
+[class*="ock:border-ock-background"] svg,
+.okui-avatar svg {
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: 9999px !important;
+  object-fit: cover !important;
+  overflow: hidden !important;
+  background: transparent !important;
+  pointer-events: none !important; /* pastikan image juga non-interactive */
+}
+
+/* biarkan username tetap bisa diklik / dipilih */
+.okui-view-header .okui-text {
+  pointer-events: auto !important;
+  margin-left: 8px !important;
+}
