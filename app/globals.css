@@ -108,90 +108,66 @@ div.ock\:border-ock-background.ock\:h-full.ock\:w-full.ock\:border {
   right: 12px !important;
   transform: translateY(-50%) !important;
 
-  width: 30px !important;
-  height: 30px !important;
+  width: 36px !important;
+  height: 36px !important;
   padding: 0 !important;
-  
+
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
 
-  background: white !important;
-  border-radius: 8px !important;
+  background: transparent !important; /* jangan berubah jadi putih saat ditekan */
+  border-radius: 9999px !important; /* bulat */
+  border: 2px solid rgba(0,82,255,0.12) !important;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08) !important;
 
   z-index: 99999 !important;
-  pointer-events: auto !important; /* Boleh diklik tanpa freeze */
-}
-
-/* Avatar image (SVG default) */
-div.ock\:border-ock-background.ock\:h-full.ock\:w-full.ock\:border svg {
-  width: 30px !important;
-  height: 30px !important;
-
-  border-radius: 8px !important;
-  overflow: hidden !important;
-
-  border: 2px solid #0052FF !important;
-  background: white !important;
-
   pointer-events: auto !important;
+  -webkit-tap-highlight-color: transparent !important; /* hilangkan flash putih di mobile */
+  touch-action: manipulation !important;
+  user-select: none !important;
+  transition: background-color 120ms ease, transform 120ms ease, box-shadow 120ms ease !important;
 }
 
-/* Jika avatar berupa IMG (bukan SVG) */
+/* konsisten ukuran avatar untuk svg/img */
+div.ock\:border-ock-background.ock\:h-full.ock\:w-full.ock\:border svg,
 div.ock\:border-ock-background.ock\:h-full.ock\:w-full.ock\:border img {
-  width: 30px !important;
-  height: 30px !important;
-
-  border-radius: 8px !important;
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 9999px !important;
+  overflow: hidden !important;
   object-fit: cover !important;
-  border: 2px solid #0052FF !important;
-
-  pointer-events: auto !important;
+  background: transparent !important;
+  border: 0 !important;
 }
 
-/* Hilangkan ukuran default 300x300 */
-div.ock\:border-ock-background.ock\:h-full.ock\:w-full.ock\:border * {
-  width: 30px !important;
-  height: 30px !important;
+/* jangan ubah jadi putih pada active/focus; beri umpan balik kecil */
+div.ock\:border-ock-background.ock\:h-full.ock\:w-full.ock\:border:active,
+div.ock\:border-ock-background.ock\:h-full.ock\:w-full.ock\:border:focus {
+  background: transparent !important;
+  transform: translateY(-50%) scale(0.99) !important;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.09) !important;
+  outline: none !important;
 }
 
-/* Anti-Freeze (mencegah layer Base App menahan scroll / klik) */
-.okui-tap-layer,
-.okui-view-transition,
-.okui-modal-overlay {
-  pointer-events: none !important;
-}
-
+/* rapikan header supaya username dan avatar sejajar */
 .okui-view-header {
-  pointer-events: none !important; /* header tidak block scroll */
-}
-
-/* Re-enable klik di avatar & username saja */
-.okui-avatar,
-.okui-avatar *,
-.okui-text,
-div.ock\:border-ock-background.ock\:h-full.ock\:w-full.ock\:border,
-div.ock\:border-ock-background.ock\:h-full.ock\:w-full.ock\:border * {
-  pointer-events: auto !important;
-}
-div.ock\:border-ock-background.ock\:h-full.ock\:w-full.ock\:border {
-  all: unset !important; /* RESET FULL ONCHAINKIT STYLE */
-  position: absolute !important;
-  top: 50% !important;
-  right: 12px !important;
-  transform: translateY(-50%) !important;
-
-  width: 30px !important;
-  height: 30px !important;
-
   display: flex !important;
   align-items: center !important;
-  justify-content: center !important;
+  justify-content: space-between !important;
+  gap: 12px !important;
+  padding: 0 12px !important;
+  pointer-events: none !important; /* non-interactive area tidak block scroll */
+}
 
-  background: white !important;
-  border-radius: 8px !important;
-  border: 2px solid #0052FF !important;
-
-  z-index: 99999 !important;
+/* aktifkan interaksi hanya untuk elemen yang perlu (avatar / tombol) */
+.okui-view-header * {
   pointer-events: auto !important;
+}
+
+/* pastikan overlay tidak memblokir scroll saat tidak aktif */
+.okui-modal-overlay,
+.okui-tap-layer {
+  pointer-events: none !important;
+  touch-action: auto !important;
 }
