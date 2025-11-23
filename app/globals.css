@@ -109,42 +109,63 @@
    FIX: MiniApp PFP terlalu besar
 —————————————————————————————— */
 
-/* SafeArea header dari MiniKit */
+/* ——————————————————————————————
+   FIX: MiniApp PFP terlalu besar + freeze ketika ditekan
+—————————————————————————————— */
+
+/* Container SafeArea dari MiniKit */
 .ok-minikit-safe-area {
-  padding-top: 8px !important;
-  padding-bottom: 8px !important;
+  padding-top: 6px !important;
+  padding-bottom: 6px !important;
   display: flex !important;
   flex-direction: column !important;
   align-items: center !important;
-  gap: 4px !important;
+  gap: 3px !important;
+
+  /* Penting agar elemen lain tidak overlap */
+  position: relative !important;
+  z-index: 10 !important;
+
+  /* Pastikan area PFP bisa ditekan */
+  pointer-events: auto !important;
 }
 
 /* Avatar (PF P) */
 .ok-minikit-safe-area img,
 img.okui-avatar-image {
-  width: 85px !important;      /* <<< Ubah ukuran di sini */
-  height: 85px !important;
-  max-width: 85px !important;
-  max-height: 85px !important;
+  width: 65px !important;      /* <<< PF P lebih kecil */
+  height: 65px !important;
+  max-width: 65px !important;
+  max-height: 65px !important;
 
   border-radius: 16px !important;
-  border: 3px solid #ffffff !important;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.12) !important;
+  border: 2px solid #ffffff !important;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.15) !important;
 
   object-fit: cover !important;
+
+  /* FIX: avatar tidak boleh membesar / stretch */
+  display: block !important;
+
+  /* FIX freeze / tidak bisa klik */
+  pointer-events: auto !important;
 }
 
-/* Username */
+/* Username styling */
 .ok-minikit-safe-area .okui-text,
 .ok-minikit-safe-area span,
 .ok-minikit-safe-area p {
-  font-size: 0.9rem !important;
   margin-top: 2px !important;
+  font-size: 0.8rem !important;
   text-align: center !important;
+
+  /* Pastikan username juga bisa ditekan */
+  pointer-events: auto !important;
 }
 
-/* Container avatar */
+/* SafeArea container atas */
 .ok-minikit-safe-area > div:first-child {
   margin: 0 !important;
   padding: 0 !important;
+  pointer-events: auto !important;
 }
