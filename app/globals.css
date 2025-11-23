@@ -84,3 +84,15 @@
     background: linear-gradient(180deg, #0052ff 0%, #ffffff 100%);
   }
 }
+.okui-modal-container {
+  justify-content: center !important;
+  align-items: center !important;
+  display: flex !important;
+}
+.okui-modal-content {
+  border-radius: 16px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important;
+  padding: 2rem !important;
+  max-width: 500px;
+  width: 90%;
+}

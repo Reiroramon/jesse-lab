@@ -13,7 +13,8 @@ type PremiumFeature = {
 
 export default function JesseLabHome() {
   const [showModal, setShowModal] = useState(false);
-  const [activeFeature, setActiveFeature] = useState<PremiumFeature | null>(null);
+  const [activeFeature, setActiveFeature] =
+    useState<PremiumFeature | null>(null);
 
   const premiumFeatures: PremiumFeature[] = [
     { name: "Mint NFT", icon: "💎", price: "5 $JESSE", desc: "Mint your creation directly on Base." },
@@ -34,7 +35,11 @@ export default function JesseLabHome() {
       {/* NAVBAR */}
       <nav className="backdrop-blur-md bg-white/50 border-b border-black/5 px-6 py-4 flex justify-between items-center sticky top-0 z-50">
         <h1 className="font-bold text-lg">JESSE LAB</h1>
-        <Wallet />
+
+        {/* WRAPPER AGAR WALLET RAPIH */}
+        <div className="flex items-center gap-3 shrink-0">
+          <Wallet />
+        </div>
       </nav>
 
       {/* HERO */}
@@ -58,10 +63,11 @@ export default function JesseLabHome() {
         <h2 className="text-2xl font-bold mb-5">Creator Showcase</h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-
           {[1, 2, 3, 4, 5, 6].map((i) => (
-            <div key={i} className="w-full h-[420px] bg-white rounded-2xl shadow-lg p-4 flex flex-col">
-
+            <div
+              key={i}
+              className="w-full h-[420px] bg-white rounded-2xl shadow-lg p-4 flex flex-col"
+            >
               <div className="h-40 w-full bg-gray-200 rounded-xl mb-3"></div>
 
               <h3 className="font-bold text-xl">Creator {i}</h3>
@@ -79,7 +85,6 @@ export default function JesseLabHome() {
               )}
             </div>
           ))}
-
         </div>
       </section>
 
