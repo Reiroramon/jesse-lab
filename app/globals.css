@@ -98,15 +98,88 @@
 }
 
 /* =========================================
-   BASE MINIAPP AVATAR FIX — FINAL WORKING
+   BASE MINIAPP AVATAR — FIX FINAL
    ========================================= */
 
-/* --- Override container avatar --- */
-div.ock-avatar,
-div[data-testid="ockAvatar_ImageContainer"] {
+/* Target container avatar yang benar */
+div.ock\:border-ock-background.ock\:h-full.ock\:w-full.ock\:border {
   position: absolute !important;
-  top: 10px !important;
+  top: 50% !important;
   right: 12px !important;
+  transform: translateY(-50%) !important;
+
+  width: 30px !important;
+  height: 30px !important;
+  padding: 0 !important;
+  
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  background: white !important;
+  border-radius: 8px !important;
+
+  z-index: 99999 !important;
+  pointer-events: auto !important; /* Boleh diklik tanpa freeze */
+}
+
+/* Avatar image (SVG default) */
+div.ock\:border-ock-background.ock\:h-full.ock\:w-full.ock\:border svg {
+  width: 30px !important;
+  height: 30px !important;
+
+  border-radius: 8px !important;
+  overflow: hidden !important;
+
+  border: 2px solid #0052FF !important;
+  background: white !important;
+
+  pointer-events: auto !important;
+}
+
+/* Jika avatar berupa IMG (bukan SVG) */
+div.ock\:border-ock-background.ock\:h-full.ock\:w-full.ock\:border img {
+  width: 30px !important;
+  height: 30px !important;
+
+  border-radius: 8px !important;
+  object-fit: cover !important;
+  border: 2px solid #0052FF !important;
+
+  pointer-events: auto !important;
+}
+
+/* Hilangkan ukuran default 300x300 */
+div.ock\:border-ock-background.ock\:h-full.ock\:w-full.ock\:border * {
+  width: 30px !important;
+  height: 30px !important;
+}
+
+/* Anti-Freeze (mencegah layer Base App menahan scroll / klik) */
+.okui-tap-layer,
+.okui-view-transition,
+.okui-modal-overlay {
+  pointer-events: none !important;
+}
+
+.okui-view-header {
+  pointer-events: none !important; /* header tidak block scroll */
+}
+
+/* Re-enable klik di avatar & username saja */
+.okui-avatar,
+.okui-avatar *,
+.okui-text,
+div.ock\:border-ock-background.ock\:h-full.ock\:w-full.ock\:border,
+div.ock\:border-ock-background.ock\:h-full.ock\:w-full.ock\:border * {
+  pointer-events: auto !important;
+}
+div.ock\:border-ock-background.ock\:h-full.ock\:w-full.ock\:border {
+  all: unset !important; /* RESET FULL ONCHAINKIT STYLE */
+  position: absolute !important;
+  top: 50% !important;
+  right: 12px !important;
+  transform: translateY(-50%) !important;
 
   width: 30px !important;
   height: 30px !important;
@@ -115,62 +188,10 @@ div[data-testid="ockAvatar_ImageContainer"] {
   align-items: center !important;
   justify-content: center !important;
 
-  border-radius: 8px !important;
-  overflow: hidden !important;
-
   background: white !important;
-  z-index: 9999 !important;
-}
-
-/* --- Avatar image (if user PFP available) --- */
-div.ock-avatar img,
-div[data-testid="ockAvatar_ImageContainer"] img {
-  width: 30px !important;
-  height: 30px !important;
-
   border-radius: 8px !important;
-  object-fit: cover !important;
-
-  border: 2px solid #0052FF !important;
-  display: block !important;
-  pointer-events: auto !important;
-}
-
-/* --- FIX default SVG avatar (fallback) --- */
-div.ock-avatar svg,
-div[data-testid="ockAvatar_ImageContainer"] svg {
-  width: 30px !important;
-  height: 30px !important;
-
-  border-radius: 8px !important;
-  overflow: hidden !important;
-
-  background: white !important;
   border: 2px solid #0052FF !important;
 
-  pointer-events: auto !important;
-}
-
-/* --- Header spacing supaya avatar tidak numpuk username --- */
-.okui-view-header {
-  padding-right: 50px !important;
-  pointer-events: none !important;
-}
-
-.okui-view-header * {
-  pointer-events: auto !important;
-}
-
-/* --- Anti Freeze Layer --- */
-.okui-tap-layer,
-.okui-view-transition,
-.okui-modal-overlay {
-  pointer-events: none !important;
-}
-
-.ock-avatar,
-.ock-avatar *,
-.okui-text,
-.okui-button {
+  z-index: 99999 !important;
   pointer-events: auto !important;
 }
