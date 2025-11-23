@@ -98,14 +98,15 @@
 }
 
 /* =========================================
-   BASE MINIAPP AVATAR FIX (FINAL WORKING)
+   BASE MINIAPP AVATAR FIX — FINAL WORKING
    ========================================= */
 
-/* Container avatar */
-[data-testid="ockAvatar_ImageContainer"] {
+/* --- Override container avatar --- */
+div.ock-avatar,
+div[data-testid="ockAvatar_ImageContainer"] {
   position: absolute !important;
   top: 10px !important;
-  right: 14px !important;
+  right: 12px !important;
 
   width: 30px !important;
   height: 30px !important;
@@ -114,55 +115,62 @@
   align-items: center !important;
   justify-content: center !important;
 
-  z-index: 99999 !important;
-  pointer-events: auto !important;
-}
-
-/* Wrapper */
-[data-testid="ockAvatar_ImageContainer"] > div {
-  width: 30px !important;
-  height: 30px !important;
-  max-width: 30px !important;
-  max-height: 30px !important;
-
   border-radius: 8px !important;
   overflow: hidden !important;
-  background: white !important;
 
-  pointer-events: auto !important;
+  background: white !important;
+  z-index: 9999 !important;
 }
 
-/* Avatar image */
-[data-testid="ockAvatar_ImageContainer"] img,
-[data-testid="ockAvatar_ImageContainer"] .ock-avatar-image {
+/* --- Avatar image (if user PFP available) --- */
+div.ock-avatar img,
+div[data-testid="ockAvatar_ImageContainer"] img {
   width: 30px !important;
   height: 30px !important;
 
   border-radius: 8px !important;
   object-fit: cover !important;
 
-  border: 2px solid #0052FF !important; /* Base Blue */
+  border: 2px solid #0052FF !important;
   display: block !important;
   pointer-events: auto !important;
 }
 
-/* Hilangkan ukuran 300px bawaan OnchainKit */
-[data-testid="ockAvatar_ImageContainer"] svg,
-[data-testid="ockAvatar_ImageContainer"] * {
+/* --- FIX default SVG avatar (fallback) --- */
+div.ock-avatar svg,
+div[data-testid="ockAvatar_ImageContainer"] svg {
   width: 30px !important;
   height: 30px !important;
+
+  border-radius: 8px !important;
+  overflow: hidden !important;
+
+  background: white !important;
+  border: 2px solid #0052FF !important;
+
+  pointer-events: auto !important;
 }
 
-/* ——— ANTI FREEZE FIX ——— */
-.ock-tap-layer,
-.ock-view-transition,
-.ock-modal-overlay {
+/* --- Header spacing supaya avatar tidak numpuk username --- */
+.okui-view-header {
+  padding-right: 50px !important;
+  pointer-events: none !important;
+}
+
+.okui-view-header * {
+  pointer-events: auto !important;
+}
+
+/* --- Anti Freeze Layer --- */
+.okui-tap-layer,
+.okui-view-transition,
+.okui-modal-overlay {
   pointer-events: none !important;
 }
 
 .ock-avatar,
 .ock-avatar *,
-[data-testid="ockAvatar_ImageContainer"],
-[data-testid="ockAvatar_ImageContainer"] * {
+.okui-text,
+.okui-button {
   pointer-events: auto !important;
 }
