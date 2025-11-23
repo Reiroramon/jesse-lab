@@ -150,24 +150,95 @@ div.ock\:border-ock-background.ock\:h-full.ock\:w-full.ock\:border:focus {
   outline: none !important;
 }
 
-/* rapikan header supaya username dan avatar sejajar */
+/* =========================================
+   BASE MINIAPP HEADER — AVATAR FIX (FINAL)
+   ========================================= */
+
+/* Header container (Base MiniApp) */
 .okui-view-header {
+  position: relative !important;
   display: flex !important;
   align-items: center !important;
   justify-content: space-between !important;
-  gap: 12px !important;
-  padding: 0 12px !important;
-  pointer-events: none !important; /* non-interactive area tidak block scroll */
+  padding-right: 56px !important; /* beri ruang supaya avatar tidak menumpuk */
+  pointer-events: none !important; /* hilangkan layer freeze */
 }
 
-/* aktifkan interaksi hanya untuk elemen yang perlu (avatar / tombol) */
-.okui-view-header * {
+/* Username (teks di header) */
+.okui-view-header .okui-text {
   pointer-events: auto !important;
+  white-space: nowrap !important;
+  font-size: 0.9rem !important;
+  font-weight: 600 !important;
+  color: inherit !important;
 }
 
-/* pastikan overlay tidak memblokir scroll saat tidak aktif */
+/* Avatar container - target testid dan fallback selector yang toleran */
+div[data-testid="ockAvatar_ImageContainer"],
+[class*="ock:border-ock-background"],
+.okui-avatar {
+  position: absolute !important;
+  right: 12px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+
+  width: 36px !important;
+  height: 36px !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  border-radius: 9999px !important;
+  background: transparent !important;
+  z-index: 99999 !important;
+
+  pointer-events: auto !important; /* bisa diklik tanpa freeze */
+  -webkit-tap-highlight-color: transparent !important; /* hilangkan flash putih di mobile */
+  touch-action: manipulation !important;
+  user-select: none !important;
+  transition: transform 120ms ease, box-shadow 120ms ease !important;
+}
+
+/* Avatar image / svg ukuran pasti */
+div[data-testid="ockAvatar_ImageContainer"] img,
+[class*="ock:border-ock-background"] img,
+.okui-avatar img,
+div[data-testid="ockAvatar_ImageContainer"] svg,
+[class*="ock:border-ock-background"] svg,
+.okui-avatar svg {
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 9999px !important;
+  object-fit: cover !important;
+  overflow: hidden !important;
+  background: transparent !important;
+  border: 0 !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+/* Feedback saat tekan / fokus tanpa menjadi putih atau memblokir scroll */
+div[data-testid="ockAvatar_ImageContainer"]:active,
+[class*="ock:border-ock-background"]:active,
+.okui-avatar:active,
+div[data-testid="ockAvatar_ImageContainer"]:focus,
+[class*="ock:border-ock-background"]:focus,
+.okui-avatar:focus {
+  transform: translateY(-50%) scale(0.98) !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12) !important;
+  outline: none !important;
+  background: transparent !important;
+}
+
+/* Pastikan overlay/tap layer tidak memblokir scroll saat tidak aktif */
 .okui-modal-overlay,
-.okui-tap-layer {
+.okui-tap-layer,
+.okui-view-transition {
   pointer-events: none !important;
   touch-action: auto !important;
+}
+
+/* Re-enable interaksi untuk isi header (username & avatar) */
+.okui-view-header * {
+  pointer-events: auto !important;
 }
