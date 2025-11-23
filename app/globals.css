@@ -98,207 +98,80 @@
 }
 
 /* =========================================
-   BASE MINIAPP AVATAR — FIX FINAL
-   ========================================= */
-
-/* Target container avatar yang benar */
-div.ock\:border-ock-background.ock\:h-full.ock\:w-full.ock\:border {
-  position: absolute !important;
-  top: 50% !important;
-  right: 12px !important;
-  transform: translateY(-50%) !important;
-
-  width: 36px !important;
-  height: 36px !important;
-  padding: 0 !important;
-
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-
-  background: transparent !important; /* jangan berubah jadi putih saat ditekan */
-  border-radius: 9999px !important; /* bulat */
-  border: 2px solid rgba(0,82,255,0.12) !important;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.08) !important;
-
-  z-index: 99999 !important;
-  pointer-events: auto !important;
-  -webkit-tap-highlight-color: transparent !important; /* hilangkan flash putih di mobile */
-  touch-action: manipulation !important;
-  user-select: none !important;
-  transition: background-color 120ms ease, transform 120ms ease, box-shadow 120ms ease !important;
-}
-
-/* konsisten ukuran avatar untuk svg/img */
-div.ock\:border-ock-background.ock\:h-full.ock\:w-full.ock\:border svg,
-div.ock\:border-ock-background.ock\:h-full.ock\:w-full.ock\:border img {
-  width: 32px !important;
-  height: 32px !important;
-  border-radius: 9999px !important;
-  overflow: hidden !important;
-  object-fit: cover !important;
-  background: transparent !important;
-  border: 0 !important;
-}
-
-/* jangan ubah jadi putih pada active/focus; beri umpan balik kecil */
-div.ock\:border-ock-background.ock\:h-full.ock\:w-full.ock\:border:active,
-div.ock\:border-ock-background.ock\:h-full.ock\:w-full.ock\:border:focus {
-  background: transparent !important;
-  transform: translateY(-50%) scale(0.99) !important;
-  box-shadow: 0 1px 6px rgba(0,0,0,0.09) !important;
-  outline: none !important;
-}
-
-/* =========================================
-   BASE MINIAPP HEADER — AVATAR LEFT & FIX SCROLL
+   AVATAR: align exactly left of first username letter + disable tap
+   - avatar size follows header font via CSS variable (responsive)
+   - header padding-left uses same size so username text starts right after avatar
+   - avatar & image pointer-events disabled so tap tidak nge-freeze scroll
    ========================================= */
 
 .okui-view-header {
   position: relative !important;
   display: flex !important;
   align-items: center !important;
-  justify-content: flex-start !important;
-  gap: 12px !important;
-  padding-left: 56px !important; /* ruang untuk avatar di kiri */
-  padding-right: 12px !important;
-  pointer-events: none !important; /* jangan block seluruh header */
+
+  /* avatar size; berubah otomatis jika font/scale berubah */
+  --avatar-size: 2.2rem; /* adjust if you want bigger/smaller */
+  --avatar-gap: 0.4rem;  /* space between avatar and first letter */
+
+  /* space for avatar so first letter sits immediately after avatar */
+  padding-left: calc(var(--avatar-size) + var(--avatar-gap)) !important;
+
+  pointer-events: none !important; /* jangan block scroll dari seluruh header */
 }
 
-/* Aktifkan interaksi hanya untuk teks & avatar */
-.okui-view-header .okui-text,
-.okui-view-header [data-testid="ockAvatar_ImageContainer"],
-.okui-view-header .okui-avatar {
+/* pastikan username tetap interaktif dan tidak terdorong oleh pointer-events:none */
+.okui-view-header .okui-text {
   pointer-events: auto !important;
+  white-space: nowrap !important;
+  font-size: inherit !important;
+  line-height: 1 !important;
 }
 
-/* Avatar container — pindah ke kiri, sejajar vertikal dengan username */
+/* Avatar container: absolute pada kiri header, menggunakan variable ukuran */
 div[data-testid="ockAvatar_ImageContainer"],
 [class*="ock:border-ock-background"],
 .okui-avatar {
   position: absolute !important;
-  left: 12px !important; /* pos kiri sebelum username */
+  left: 12px !important; /* jarak dari kiri header; sesuaikan kalau perlu */
   top: 50% !important;
   transform: translateY(-50%) !important;
 
-  width: 36px !important;
-  height: 36px !important;
-  padding: 0 !important;
-
+  width: var(--avatar-size) !important;
+  height: var(--avatar-size) !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
 
   border-radius: 9999px !important;
   background: transparent !important;
-  border: 2px solid rgba(0,82,255,0.12) !important;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.06) !important;
-
   z-index: 99999 !important;
+
+  /* disable interaction so tapping avatar doesn't block scrolling */
+  pointer-events: none !important;
   -webkit-tap-highlight-color: transparent !important;
-  touch-action: manipulation !important;
-  user-select: none !important;
-  transition: transform 120ms ease, box-shadow 120ms ease !important;
+  touch-action: none !important;
 }
 
-/* Paksakan ukuran image/svg di dalam avatar */
+/* gambar/svg isi avatar - sedikit lebih kecil agar ada padding visual */
 div[data-testid="ockAvatar_ImageContainer"] img,
 [class*="ock:border-ock-background"] img,
 .okui-avatar img,
 div[data-testid="ockAvatar_ImageContainer"] svg,
 [class*="ock:border-ock-background"] svg,
 .okui-avatar svg {
-  width: 32px !important;
-  height: 32px !important;
+  width: calc(var(--avatar-size) - 6px) !important;
+  height: calc(var(--avatar-size) - 6px) !important;
   border-radius: 9999px !important;
   object-fit: cover !important;
   overflow: hidden !important;
   background: transparent !important;
-  border: 0 !important;
-  -webkit-tap-highlight-color: transparent !important;
+  pointer-events: none !important;
 }
 
-/* Tekan / fokus — umpan balik kecil tanpa menutupi atau menjadi putih */
-div[data-testid="ockAvatar_ImageContainer"]:active,
-[class*="ock:border-ock-background"]:active,
-.okui-avatar:active,
-div[data-testid="ockAvatar_ImageContainer"]:focus,
-[class*="ock:border-ock-background"]:focus,
-.okui-avatar:focus {
-  transform: translateY(-50%) scale(0.98) !important;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.12) !important;
-  outline: none !important;
-  background: transparent !important;
-}
-
-/* Pastikan tap/overlay layer tidak memblokir scroll */
+/* keep overlays from blocking scroll */
 .okui-tap-layer,
 .okui-modal-overlay,
 .okui-view-transition {
   pointer-events: none !important;
   touch-action: auto !important;
-}
-
-/* Username styling tetap rapi setelah pindah avatar */
-.okui-view-header .okui-text {
-  white-space: nowrap !important;
-  font-size: 0.9rem !important;
-  font-weight: 600 !important;
-  color: inherit !important;
-}
-
-/* =========================================
-   AVATAR: PLACE EXACTLY IN RED CIRCLE + DISABLE TAP (NO STUCK SCROLL)
-   ========================================= */
-
-/* header tetap memberi ruang untuk avatar di kiri */
-.okui-view-header {
-  position: relative !important;
-  padding-left: 64px !important; /* pastikan ada ruang untuk avatar */
-}
-
-/* target container avatar yang ada; non-interactive supaya tidak bisa ditekan */
-div[data-testid="ockAvatar_ImageContainer"],
-[class*="ock:border-ock-background"],
-.okui-avatar {
-  position: absolute !important;
-  left: 12px !important;            /* sesuaikan angka ini jika perlu geser horizontal */
-  top: 50% !important;
-  transform: translateY(-50%) !important;
-
-  width: 40px !important;           /* ukuran kotak avatar sesuai lingkaran merah */
-  height: 40px !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-
-  border-radius: 9999px !important;
-  background: transparent !important;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.06) !important;
-  z-index: 99999 !important;
-
-  pointer-events: none !important;  /* DISABLE TAP: mencegah stuck scroll */
-  -webkit-tap-highlight-color: transparent !important;
-}
-
-/* pastikan gambar/svg mengisi lingkaran dan agak lebih kecil dari container */
-div[data-testid="ockAvatar_ImageContainer"] img,
-[class*="ock:border-ock-background"] img,
-.okui-avatar img,
-div[data-testid="ockAvatar_ImageContainer"] svg,
-[class*="ock:border-ock-background"] svg,
-.okui-avatar svg {
-  width: 36px !important;
-  height: 36px !important;
-  border-radius: 9999px !important;
-  object-fit: cover !important;
-  overflow: hidden !important;
-  background: transparent !important;
-  pointer-events: none !important; /* pastikan image juga non-interactive */
-}
-
-/* biarkan username tetap bisa diklik / dipilih */
-.okui-view-header .okui-text {
-  pointer-events: auto !important;
-  margin-left: 8px !important;
 }
