@@ -42,18 +42,10 @@
     padding: 0.25rem 0.5rem calc(0.25rem + 2px);
   }
 
-  @media (prefers-color-scheme: dark) {
-    code {
-      background-color: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-  }
-
   *, *::before, *::after {
     box-sizing: border-box;
   }
 
-  /* Reset style OnchainKit agar tidak merusak layout */
   .onchainkit * {
     all: revert-layer;
   }
@@ -105,34 +97,29 @@
   width: 90%;
 }
 
-/* ——————————————————————————————
-   MINIAPP — FINAL FIX (PFP 30px + NO FREEZE + RIGHT TOP)
-—————————————————————————————— */
+/* =========================================
+   BASE MINIAPP AVATAR FIX (FINAL WORKING)
+   ========================================= */
 
-/* Posisi SafeArea MiniKit */
-.ok-minikit-safe-area {
+/* Container avatar */
+[data-testid="ockAvatar_ImageContainer"] {
   position: absolute !important;
-  top: 8px !important;
-  right: 12px !important;
+  top: 10px !important;
+  right: 14px !important;
+
+  width: 30px !important;
+  height: 30px !important;
 
   display: flex !important;
-  flex-direction: column !important;
   align-items: center !important;
-  gap: 2px !important;
-
-  padding: 0 !important;
-  margin: 0 !important;
-
-  background: transparent !important;
+  justify-content: center !important;
 
   z-index: 99999 !important;
-
-  pointer-events: none !important; /* jangan blokir scroll */
+  pointer-events: auto !important;
 }
 
-/* AVATAR WRAPPER */
-.ok-minikit-safe-area .okui-avatar,
-.ok-minikit-safe-area .okui-avatar > div {
+/* Wrapper */
+[data-testid="ockAvatar_ImageContainer"] > div {
   width: 30px !important;
   height: 30px !important;
   max-width: 30px !important;
@@ -140,58 +127,42 @@
 
   border-radius: 8px !important;
   overflow: hidden !important;
-
   background: white !important;
 
   pointer-events: auto !important;
 }
 
-/* AVATAR IMAGE */
-.ok-minikit-safe-area img,
-img.okui-avatar-image {
+/* Avatar image */
+[data-testid="ockAvatar_ImageContainer"] img,
+[data-testid="ockAvatar_ImageContainer"] .ock-avatar-image {
   width: 30px !important;
   height: 30px !important;
 
   border-radius: 8px !important;
   object-fit: cover !important;
 
-  border: 2px solid #0052FF !important;
-
+  border: 2px solid #0052FF !important; /* Base Blue */
   display: block !important;
   pointer-events: auto !important;
 }
 
-/* USERNAME */
-.ok-minikit-safe-area .okui-text {
-  font-size: 0.60rem !important;
-  line-height: 1 !important;
-  margin-top: 2px !important;
-  text-align: center !important;
-  color: black !important;
-  pointer-events: auto !important;
+/* Hilangkan ukuran 300px bawaan OnchainKit */
+[data-testid="ockAvatar_ImageContainer"] svg,
+[data-testid="ockAvatar_ImageContainer"] * {
+  width: 30px !important;
+  height: 30px !important;
 }
 
-/* ——— ANTI FREEZE ——— */
-.okui-tap-layer,
-.okui-view-transition,
-.okui-view-header,
-.okui-modal-overlay {
+/* ——— ANTI FREEZE FIX ——— */
+.ock-tap-layer,
+.ock-view-transition,
+.ock-modal-overlay {
   pointer-events: none !important;
 }
 
-.okui-avatar,
-.okui-avatar * ,
-.okui-text,
-.okui-button,
-.ok-minikit-safe-area * {
-  pointer-events: auto !important;
-}
-
-.okui-view-header > * {
-  pointer-events: none !important;
-}
-
-.okui-view-header .okui-avatar,
-.okui-view-header .okui-avatar * {
+.ock-avatar,
+.ock-avatar *,
+[data-testid="ockAvatar_ImageContainer"],
+[data-testid="ockAvatar_ImageContainer"] * {
   pointer-events: auto !important;
 }
