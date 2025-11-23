@@ -106,66 +106,58 @@
 }
 
 /* ——————————————————————————————
-   FIX: MiniApp PFP terlalu besar
+   FIX: MiniApp PFP — ukuran kecil + tidak freeze
 —————————————————————————————— */
 
-/* ——————————————————————————————
-   FIX: MiniApp PFP terlalu besar + freeze ketika ditekan
-—————————————————————————————— */
-
-/* Container SafeArea dari MiniKit */
+/* SafeArea container */
 .ok-minikit-safe-area {
-  padding-top: 6px !important;
-  padding-bottom: 6px !important;
+  padding-top: 4px !important;
+  padding-bottom: 4px !important;
   display: flex !important;
   flex-direction: column !important;
   align-items: center !important;
-  gap: 3px !important;
-
-  /* Penting agar elemen lain tidak overlap */
-  position: relative !important;
-  z-index: 10 !important;
-
-  /* Pastikan area PFP bisa ditekan */
-  pointer-events: auto !important;
+  gap: 2px !important;
+  pointer-events: none !important; /* penting */
 }
 
-/* Avatar (PF P) */
+/* Avatar wrapper */
+.ok-minikit-safe-area .okui-avatar,
+.ok-minikit-safe-area .okui-avatar > div {
+  width: 55px !important; 
+  height: 55px !important;
+  max-width: 55px !important;
+  max-height: 55px !important;
+  border-radius: 14px !important;
+  overflow: hidden !important;
+
+  pointer-events: auto !important; /* aktifkan interaksi */
+}
+
+/* Avatar image */
 .ok-minikit-safe-area img,
 img.okui-avatar-image {
-  width: 65px !important;      /* <<< PF P lebih kecil */
-  height: 65px !important;
-  max-width: 65px !important;
-  max-height: 65px !important;
+  width: 55px !important;
+  height: 55px !important;
+  max-width: 55px !important;
+  max-height: 55px !important;
 
-  border-radius: 16px !important;
-  border: 2px solid #ffffff !important;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.15) !important;
+  border-radius: 14px !important;
+  border: 2px solid #fff !important;
 
   object-fit: cover !important;
-
-  /* FIX: avatar tidak boleh membesar / stretch */
   display: block !important;
 
-  /* FIX freeze / tidak bisa klik */
   pointer-events: auto !important;
 }
 
-/* Username styling */
-.ok-minikit-safe-area .okui-text,
-.ok-minikit-safe-area span,
-.ok-minikit-safe-area p {
-  margin-top: 2px !important;
+/* Username */
+.ok-minikit-safe-area .okui-text {
+  pointer-events: auto !important;
   font-size: 0.8rem !important;
-  text-align: center !important;
-
-  /* Pastikan username juga bisa ditekan */
-  pointer-events: auto !important;
+  margin-top: 3px !important;
 }
 
-/* SafeArea container atas */
+/* Hapus blocking tap pada container pertama */
 .ok-minikit-safe-area > div:first-child {
-  margin: 0 !important;
-  padding: 0 !important;
-  pointer-events: auto !important;
+  pointer-events: none !important;
 }
