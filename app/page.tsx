@@ -33,14 +33,15 @@ export default function JesseLabHome() {
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-[#0052FF] to-white">
 
       {/* NAVBAR */}
-      <nav className="backdrop-blur-md bg-white/50 border-b border-black/5 px-6 py-4 flex justify-between items-center sticky top-0 z-50">
-        <h1 className="font-bold text-lg">JESSE LAB</h1>
+       <nav className="backdrop-blur-md bg-white/50 border-b border-black/5 px-6 py-4 flex justify-between items-center sticky top-0 z-50">
+  <h1 className="font-bold text-lg">JESSE LAB</h1>
 
-        {/* WRAPPER AGAR WALLET RAPIH */}
-        <div className="flex items-center gap-3 shrink-0">
-          <Wallet />
-        </div>
-      </nav>
+  {/* FIX → wrapper khusus agar tidak jatuh ke bawah */}
+  <div className="absolute right-6 top-4">
+    <Wallet />
+  </div>
+</nav>
+
 
       {/* HERO */}
       <section className="text-center px-6 py-16">
