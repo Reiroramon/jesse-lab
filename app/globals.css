@@ -98,76 +98,35 @@
 }
 
 /* =========================================
-   BASE MINIAPP HEADER — AVATAR 30px
+   SAFE FIX — Avatar 30px + No Freeze
    ========================================= */
 
-/* Header memberi ruang untuk avatar di kiri */
-.okui-view-header {
-  position: relative !important;
-  display: flex !important;
-  align-items: center !important;
-
-  --avatar-size: 1.85rem;  /* ≈ 30px */
-  --avatar-gap: 0.4rem;    /* jarak avatar → username */
-
-  padding-left: calc(var(--avatar-size) + var(--avatar-gap)) !important;
-
-  pointer-events: none !important; /* jangan block scroll */
-}
-
-/* Username tetap interaktif */
-.okui-view-header .okui-text {
-  pointer-events: auto !important;
-  white-space: nowrap !important;
-  line-height: 1 !important;
-}
-
-/* Avatar container — posisikan tepat sebelum huruf pertama username */
-div[data-testid="ockAvatar_ImageContainer"],
-[class*="ock:border-ock-background"],
-.okui-avatar {
-  position: absolute !important;
-  left: 12px !important;     /* titik pas yang kamu mau dari gambar */
-  top: 50% !important;
-  transform: translateY(-50%) !important;
-
-  width: var(--avatar-size) !important;
-  height: var(--avatar-size) !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-
-  border-radius: 9999px !important;
-  background: transparent !important;
-
-  /* supaya tidak freeze ketika di-tap */
-  pointer-events: none !important;
-  -webkit-tap-highlight-color: transparent !important;
-  touch-action: none !important;
-
-  z-index: 99999 !important;
-}
-
-/* Avatar image / svg — lebih kecil 4–6px biar rapi */
+/* Kecilkan avatar tanpa mengubah posisi header bawaan Base */
 div[data-testid="ockAvatar_ImageContainer"] img,
-[class*="ock:border-ock-background"] img,
-.okui-avatar img,
-div[data-testid="ockAvatar_ImageContainer"] svg,
-[class*="ock:border-ock-background"] svg,
-.okui-avatar svg {
-  width: calc(var(--avatar-size) - 4px) !important;
-  height: calc(var(--avatar-size) - 4px) !important;
-
+div[data-testid="ockAvatar_ImageContainer"] svg {
+  width: 30px !important;
+  height: 30px !important;
   border-radius: 9999px !important;
   object-fit: cover !important;
-
-  background: transparent !important;
-  pointer-events: none !important;
 }
 
-/* Layer lain jangan blokir scroll */
+/* Container avatar ikut mengecil */
+div[data-testid="ockAvatar_ImageContainer"] {
+  width: 30px !important;
+  height: 30px !important;
+
+  border-radius: 9999px !important;
+  overflow: hidden !important;
+
+  background: transparent !important;
+  border: none !important;
+
+  pointer-events: none !important; /* hilangkan freeze */
+}
+
+/* Layer yang bikin freeze */
 .okui-tap-layer,
-.okui-modal-overlay,
-.okui-view-transition {
+.okui-view-transition,
+.okui-modal-overlay {
   pointer-events: none !important;
 }
