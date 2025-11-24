@@ -17,7 +17,7 @@ export default function JesseLabHome() {
   const [activeFeature, setActiveFeature] =
     useState<PremiumFeature | null>(null);
 
-  const { address, isConnected } = useAccount();
+  const { address: _address, isConnected } = useAccount();
 
   // Detect if app is running inside Farcaster Miniapp
   const isFarcaster =
