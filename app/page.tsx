@@ -57,8 +57,7 @@ export default function JesseLabHome() {
              /* BASE APP / WEB */
              <ConnectWallet className="scale-[0.95]" />
            )}
-          {address && <span className="ml-3 text-sm text-gray-700 truncate max-w-[140px]">{address}</span>}
-         </div>
+        </div>
       </nav>
 
       {/* HERO */}
