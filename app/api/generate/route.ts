@@ -7,15 +7,14 @@ export async function POST(req: Request) {
     const { prompt } = await req.json();
     console.log("Prompt received:", prompt);
 
-    // 🚨 GUNAKAN ENDPOINT BARU
     const response = await fetch(
-      "https://router.huggingface.co/stabilityai/sdxl-turbo",
+      "https://router.huggingface.co/black-forest-labs/FLUX.1-schnell",
       {
         method: "POST",
         headers: {
           Authorization: `Bearer ${process.env.HF_TOKEN}`,
-          "Content-Type": "application/json",
           "HF-API-KEY": process.env.HF_TOKEN!,
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           inputs: prompt,
@@ -35,16 +34,7 @@ export async function POST(req: Request) {
     }
 
     const arrayBuffer = await response.arrayBuffer();
-
-    if (!arrayBuffer || arrayBuffer.byteLength === 0) {
-      console.error("❌ EMPTY IMAGE FROM HF");
-      return NextResponse.json(
-        { error: "EMPTY_IMAGE" },
-        { status: 500 }
-      );
-    }
-
-    console.log("✅ Image size:", arrayBuffer.byteLength);
+    console.log("Image size:", arrayBuffer.byteLength);
 
     return new Response(arrayBuffer, {
       headers: {
