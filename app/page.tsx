@@ -50,16 +50,15 @@ export default function JesseLabHome() {
         <h1 className="font-bold text-lg">JESSE LAB</h1>
 
         <div className="ml-auto flex items-center">
-
-          {/* FARCASTER MINIAPP MODE */}
-          {isFarcaster ? (
-            <Wallet className="scale-[0.95]" />
-          ) : (
-            /* BASE APP / WEB */
-            <ConnectWallet className="scale-[0.95]" />
-          )}
-
-        </div>
+           {/* FARCASTER MINIAPP MODE */}
+           {isFarcaster ? (
+             <Wallet className="scale-[0.95]" />
+           ) : (
+             /* BASE APP / WEB */
+             <ConnectWallet className="scale-[0.95]" />
+           )}
+          {address && <span className="ml-3 text-sm text-gray-700 truncate max-w-[140px]">{address}</span>}
+         </div>
       </nav>
 
       {/* HERO */}
