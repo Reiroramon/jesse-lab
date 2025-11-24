@@ -7,15 +7,19 @@ export async function POST(req: Request) {
     const { prompt } = await req.json();
     console.log("Prompt received:", prompt);
 
+    // 🚨 GUNAKAN ENDPOINT BARU
     const response = await fetch(
-      "https://api-inference.huggingface.co/models/stabilityai/sdxl-turbo",
+      "https://router.huggingface.co/stabilityai/sdxl-turbo",
       {
         method: "POST",
         headers: {
           Authorization: `Bearer ${process.env.HF_TOKEN}`,
           "Content-Type": "application/json",
+          "HF-API-KEY": process.env.HF_TOKEN!,
         },
-        body: JSON.stringify({ inputs: prompt }),
+        body: JSON.stringify({
+          inputs: prompt,
+        }),
       }
     );
 
@@ -23,25 +27,24 @@ export async function POST(req: Request) {
 
     if (!response.ok) {
       const error = await response.text();
-      console.error("❌ HuggingFace Error:", error);
+      console.error("❌ HF ERROR:", error);
       return NextResponse.json(
         { error: "HF_MODEL_ERROR", details: error },
         { status: 500 }
       );
     }
 
-    // HuggingFace returns raw binary image data
     const arrayBuffer = await response.arrayBuffer();
 
     if (!arrayBuffer || arrayBuffer.byteLength === 0) {
-      console.error("❌ HF returned EMPTY image");
+      console.error("❌ EMPTY IMAGE FROM HF");
       return NextResponse.json(
         { error: "EMPTY_IMAGE" },
         { status: 500 }
       );
     }
 
-    console.log("✅ Image buffer size:", arrayBuffer.byteLength);
+    console.log("✅ Image size:", arrayBuffer.byteLength);
 
     return new Response(arrayBuffer, {
       headers: {
