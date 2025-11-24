@@ -4,6 +4,9 @@ import { useState } from "react";
 import { Wallet, ConnectWallet } from "@coinbase/onchainkit/wallet";
 import { useAccount } from "wagmi";
 
+// ⬇️ tambahkan ini
+import AvatarButton from "@/app/components/avatar/AvatarButton";
+
 // Type for premium features
 type PremiumFeature = {
   name: string;
@@ -107,6 +110,13 @@ export default function JesseLabHome() {
 
               <div className="mt-auto h-28 w-full bg-gray-100 rounded-xl"></div>
 
+              {/* ⭐ MASUKKAN TOMBOL GENERATE AVATAR DI ITEM PERTAMA */}
+              {i === 1 && (
+                <div className="mt-3">
+                  <AvatarButton />
+                </div>
+              )}
+
               {i % 2 === 0 && (
                 <div className="mt-2 text-xs font-semibold text-yellow-600 bg-yellow-200 px-3 py-1 rounded-full text-center shadow-lg shadow-yellow-200/50">
                   ⭐ Premium Unlocked
@@ -142,7 +152,7 @@ export default function JesseLabHome() {
         <a href="#" className="mx-2">Twitter</a>
       </footer>
 
-      {/* MODAL */}
+      {/* FEATURE MODAL */}
       {showModal && activeFeature && (
         <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50">
           <div className="bg-white rounded-2xl p-6 w-80 shadow-xl">
