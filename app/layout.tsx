@@ -1,3 +1,4 @@
+// app/layout.tsx
 import type { Metadata } from "next";
 import { Inter, Source_Code_Pro } from "next/font/google";
 import "./globals.css";
@@ -24,19 +25,29 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
-const code = Source_Code_Pro({ variable: "--font-source-code-pro", subsets: ["latin"] });
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+});
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+const code = Source_Code_Pro({
+  variable: "--font-source-code-pro",
+  subsets: ["latin"],
+});
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en" className="antialiased">
-      <body className={`${inter.variable} ${code.variable} bg-white text-black min-h-screen flex flex-col`}>
-        
-        {/* ALL PROVIDERS HERE */}
+      <body
+        className={`${inter.variable} ${code.variable} bg-white text-black min-h-screen flex flex-col`}
+      >
+        {/* Wrap all client-side providers */}
         <Providers>
-          <main className="flex-1 flex flex-col">
-            {children}
-          </main>
+          <main className="flex-1 flex flex-col">{children}</main>
         </Providers>
 
         <footer className="py-4 text-center text-sm text-black/40">

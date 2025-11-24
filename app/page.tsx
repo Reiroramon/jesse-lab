@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { Wallet } from "@coinbase/onchainkit/wallet";
+import { Wallet, ConnectWallet } from "@coinbase/onchainkit/wallet";
+import { useAccount } from "wagmi";
 
-// Type untuk fitur premium
+// Type for premium features
 type PremiumFeature = {
   name: string;
   icon: string;
@@ -16,6 +17,14 @@ export default function JesseLabHome() {
   const [activeFeature, setActiveFeature] =
     useState<PremiumFeature | null>(null);
 
+  const { address, isConnected } = useAccount();
+
+  // Detect if app is running inside Farcaster Miniapp
+  const isFarcaster =
+    typeof window !== "undefined" &&
+    window.parent !== window &&
+    navigator.userAgent.includes("Farcaster");
+
   const premiumFeatures: PremiumFeature[] = [
     { name: "Mint NFT", icon: "💎", price: "5 $JESSE", desc: "Mint your creation directly on Base." },
     { name: "FX Filters", icon: "✨", price: "3 $JESSE", desc: "Unlock premium Jesse-style filters." },
@@ -25,6 +34,10 @@ export default function JesseLabHome() {
   ];
 
   const openModal = (item: PremiumFeature) => {
+    if (!isConnected) {
+      alert("Please connect your wallet first.");
+      return;
+    }
     setActiveFeature(item);
     setShowModal(true);
   };
@@ -32,13 +45,20 @@ export default function JesseLabHome() {
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-[#0052FF] to-white">
 
-      {/* NAVBAR – FIX MINIAPP + FIX WALLET */}
+      {/* NAVBAR */}
       <nav className="bg-white/60 backdrop-blur-md border-b border-black/5 px-6 py-4 flex items-center gap-4 relative z-50">
         <h1 className="font-bold text-lg">JESSE LAB</h1>
 
-        {/* Di kanan atas, tidak absolute, tidak sticky */}
         <div className="ml-auto flex items-center">
-          <Wallet />
+
+          {/* FARCASTER MINIAPP MODE */}
+          {isFarcaster ? (
+            <Wallet className="scale-[0.95]" />
+          ) : (
+            /* BASE APP / WEB */
+            <ConnectWallet className="scale-[0.95]" />
+          )}
+
         </div>
       </nav>
 
@@ -47,15 +67,26 @@ export default function JesseLabHome() {
         <h1 className="text-4xl font-extrabold text-black drop-shadow">
           Showcase your creation on Base
         </h1>
+
         <p className="mt-3 text-gray-700">
           Create, remix, and mint — powered by $jesse.
         </p>
 
-        <button className="mt-6 bg-black text-white px-6 py-3 rounded-xl text-lg">
+        <button
+          className="mt-6 bg-black text-white px-6 py-3 rounded-xl text-lg"
+          onClick={() => {
+            if (!isConnected) {
+              alert("Connect wallet first.");
+              return;
+            }
+          }}
+        >
           Start Creating
         </button>
 
-        <a href="#showcase" className="block mt-4 text-blue-700">Browse showcase →</a>
+        <a href="#showcase" className="block mt-4 text-blue-700">
+          Browse showcase →
+        </a>
       </section>
 
       {/* CREATOR FEED */}
